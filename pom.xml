@@ -60,8 +60,32 @@
 						<image>gcr.io/distroless/java:8</image>
 					</from>
 					<to>
-						<image>localhost:5000/${project.artifactId}:${project.version}</image>
+						<image>localhost:5000/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
+						<tags>
+							<tag>${git.commit.id.describe-short}</tag>
+							<tag>${project.version}-${git.commit.id.describe-short}</tag>
+							<tag>${project.artifactId}</tag>
+							<tag>${project.version}</tag>
+							<!-- <tag>latest</tag> -->
+						</tags>
 					</to>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>pl.project13.maven</groupId>
+				<artifactId>git-commit-id-plugin</artifactId>
+				<version>${git-commit-id-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>get-the-git-infos</id>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+						<phase>validate</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
