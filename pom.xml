@@ -62,11 +62,9 @@
 					<to>
 						<image>localhost:5000/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
 						<tags>
+							<tag>${project.version}</tag>
 							<tag>${git.commit.id.describe-short}</tag>
 							<tag>${project.version}-${git.commit.id.describe-short}</tag>
-							<tag>${project.artifactId}</tag>
-							<tag>${project.version}</tag>
-							<!-- <tag>latest</tag> -->
 						</tags>
 					</to>
 				</configuration>
