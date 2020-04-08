@@ -60,7 +60,7 @@
 						<image>gcr.io/distroless/java:8</image>
 					</from>
 					<to>
-						<image>localhost:5000/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
+						<image>192.168.1.5:30416/test-project/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
 						<tags>
 							<tag>${project.version}</tag>
 							<tag>${git.commit.id.describe-short}</tag>
