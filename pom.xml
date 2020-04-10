@@ -10,10 +10,10 @@
 		<!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>spring-boot-distroless-multistage</artifactId>
+	<artifactId>spring-boot-distroless-jib</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-distroless-multistage</name>
-	<description>Demo project for Spring Boot</description>
+	<name>spring-boot-distroless-jib</name>
+	<description>jiib based docker image gen</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -60,16 +60,16 @@
 						<image>gcr.io/distroless/java:8</image>
 					</from>
 					<to>
-						<image>vijayraghavan08/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
+						<image>gcr.io/ci-cd-273814/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
 						<tags>
 							<tag>${project.version}</tag>
 							<tag>${git.commit.id.describe-short}</tag>
 							<tag>${project.version}-${git.commit.id.describe-short}</tag>
 						</tags>
-						<auth>
+						<!-- <auth>
 							<username>${env.REGISTRY_USERNAME}</username>
       						<password>${env.REGISTRY_PASSWORD}</password>
-						</auth>
+						</auth> -->
 					</to>
 				</configuration>
 			</plugin>
