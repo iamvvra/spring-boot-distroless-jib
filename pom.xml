@@ -60,7 +60,7 @@
 						<image>gcr.io/distroless/java:8</image>
 					</from>
 					<to>
-						<image>gcr.io/ci-cd-273814/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
+						<image>vijayraghavan08/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
 						<credHelper>gcr</credHelper>
 						<tags>
 							<tag>${project.version}</tag>
