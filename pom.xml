@@ -60,12 +60,16 @@
 						<image>gcr.io/distroless/java:8</image>
 					</from>
 					<to>
-						<image>192.168.1.5:30416/test-project/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
+						<image>vijayraghavan08/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
 						<tags>
 							<tag>${project.version}</tag>
 							<tag>${git.commit.id.describe-short}</tag>
 							<tag>${project.version}-${git.commit.id.describe-short}</tag>
 						</tags>
+						<auth>
+							<username>${env.REGISTRY_USERNAME}</username>
+      						<password>${env.REGISTRY_PASSWORD}</password>
+						</auth>
 					</to>
 				</configuration>
 			</plugin>
