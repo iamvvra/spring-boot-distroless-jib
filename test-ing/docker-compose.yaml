@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  drone-server:
+    container_name: drone_server
+    image: drone/drone:1
+    ports:
+      - 8080:80
+    volumes:
+      - /tmp/drone:/data
+      - /tmp/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      - DRONE_GITHUB_SERVER=https://github.com
+      - DRONE_GITHUB_CLIENT_ID=b0fab3762e848c1652a2
+      - DRONE_GITHUB_CLIENT_SECRET=3fd77acc2ddd79830959c2944b4f3fc9da0fe3d6
+      - DRONE_AGENTS_ENABLED=true
+      - DRONE_RPC_SECRET=random_secret
+      - DRONE_SERVER_HOST=6a02bf8d.ngrok.io
+      - DRONE_SERVER_PROTO=https
+      - DRONE_TLS_AUTOCERT=false
+      - DRONE_LOGS_TRACE=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true
+
+  drone-agent:
+    container_name: drone_agent
+    image: drone/agent:1
+    volumes:
+      - /tmp/docker.sock:/var/run/docker.sock
+    restart: always
+    environment:
+      - DRONE_RPC_HOST=6a02bf8d.ngrok.io
+      - DRONE_RPC_SECRET=random_secret
+      - DRONE_RUNNER_CAPACITY=2
+      - DRONE_RUNNER_NAME=maven-runner
+      - DRONE_LOGS_TRACE=true
+      - DRONE_LOGS_PRETTY=true
+      - DRONE_LOGS_COLOR=true

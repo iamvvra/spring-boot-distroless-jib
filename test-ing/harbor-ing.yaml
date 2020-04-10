@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: harbor
+  namespace: harbor
+spec:
+  rules:
+  - host: harbor.traefik.k8s
+    http:
+      paths:
+      - backend:
+          serviceName: harbor
+          servicePort: 443

@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  name: kubeapps
+  namespace: kubeapps
+spec:
+  rules:
+  - host: kubeapps.traefik.k8s
+    http:
+      paths:
+      - backend:
+          serviceName: kubeapps
+          servicePort: 80
+        path: /
+
