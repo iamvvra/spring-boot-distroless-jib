@@ -5,11 +5,11 @@ type: docker
 steps:
 - name: test-and-build
   image: maven
+  environment:
+    USERNAME:
+      from_secret: REGISTRY_PASSWORD
+    PASSWORD:
+      from_secret: REGISTRY_USERNAME
   commands:
-  - mvn clean test
-  - mvn package -DskipTests=true
-
-- name: build-docker-image
-  image: maven
-  commands:
-  - mvn compile jib:build -Djib.allowInsecureRegistries=true
+  - mvn clean package
+  - mvn compile jib:build -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
