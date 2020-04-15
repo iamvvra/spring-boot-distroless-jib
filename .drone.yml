@@ -19,7 +19,7 @@ steps:
   debug: true
   volumes:
   - name: m2
-    path: /run/drone
+    path: /drone
   environment:
     REPO_USERNAME:
       from_secret: REPO_USERNAME
@@ -45,7 +45,7 @@ steps:
   image: gcr.io/cloud-builders/mvn
   volumes:
   - name: m2
-    path: /run/drone
+    path: /drone
   commands:
     - mvn deploy -DskipTests=true
   when:
