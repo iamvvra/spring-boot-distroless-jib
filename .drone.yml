@@ -4,7 +4,7 @@ type: kubernetes
 
 steps:
 - name: code-analysis
-  image: aosapps/drone-sonar-plugin
+  image: gcr.io/cloud-builders/mvn
   environment:
     sonar_host:
       from_secret: sonar_host
