@@ -4,11 +4,16 @@ type: kubernetes
 
 steps:
 - name: test-build-image
-  image: maven
+  image: gcr.io/cloud-builders/mvn
+  commands:
+  - mvn test
+- name: build-jar
+  DRONE_STAGE_DEPENDS_ON=test-build-image
+  image: gcr.io/cloud-builders/mvn
   environment:
     USERNAME:
       from_secret: REGISTRY_USERNAME
     PASSWORD:
       from_secret: REGISTRY_PASSWORD
   commands:
-  - mvn package jib:build -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
+    - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
