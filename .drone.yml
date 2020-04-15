@@ -8,6 +8,17 @@ volumes:
     path: /var/lib/cache
 
 steps:
+- name: test
+  image: gcr.io/cloud-builders/mvn
+  commands:
+  - mvn test
+  when:
+    branch:
+      - feature/*
+      - master
+    event:
+      - pull_request
+      - push
 - name: mvn-auth
   image: robertstettner/drone-mvn-auth
   debug: true
@@ -35,7 +46,6 @@ steps:
           layout: default
   active_profiles:
       - my-profile  
-
 - name: package
   image: gcr.io/cloud-builders/mvn
   volumes:
@@ -49,5 +59,22 @@ steps:
     event:
       - push
   depends_on:
-    # - test
+    - test
     - mvn-auth
+- name: build-image
+  image: gcr.io/cloud-builders/mvn
+  environment:
+    USERNAME:
+      from_secret: REGISTRY_USERNAME
+    PASSWORD:
+      from_secret: REGISTRY_PASSWORD
+  commands:
+    - echo "$USERNAME"
+    - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
+  depends_on:
+    - test
+  when:
+    branch:
+      - master
+    event:
+      - push
