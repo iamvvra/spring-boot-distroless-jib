@@ -8,7 +8,6 @@ steps:
   commands:
   - mvn test
 - name: build-jar
-  DRONE_STAGE_DEPENDS_ON=test-build-image
   image: gcr.io/cloud-builders/mvn
   environment:
     USERNAME:
