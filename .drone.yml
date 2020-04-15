@@ -3,19 +3,9 @@ name: default
 type: kubernetes
 
 steps:
-- name: test
-  image: gcr.io/cloud-builders/mvn
-  commands:
-  - mvn test
-  when:
-    branch:
-      - feature/*
-      - master
-    event:
-      - pull_request
-      - push
-- name: package
+- name: mvn-auth
   image: robertstettner/drone-mvn-auth
+  debug: true
   environment:
     REPO_USERNAME:
       from_secret: REPO_USERNAME
@@ -37,13 +27,29 @@ steps:
           layout: default
   active_profiles:
       - my-profile  
+- name: test
+  image: gcr.io/cloud-builders/mvn
+  commands:
+  - mvn test
+  when:
+    branch:
+      - feature/*
+      - master
+    event:
+      - pull_request
+      - push
+- name: package
+  image: gcr.io/cloud-builders/mvn
   commands:
     - mvn deploy -DskipTests=true
   when:
     branch:
       - master
+    event:
+      - push
   depends_on:
     - test
+    - mvn-auth
 - name: build-image
   image: gcr.io/cloud-builders/mvn
   environment:
