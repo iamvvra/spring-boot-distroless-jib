@@ -2,6 +2,30 @@ kind: pipeline
 name: default
 type: kubernetes
 
+authenticate:
+  image: robertstettner/drone-mvn-auth
+  environment:
+  REPO_USERNAME:
+    from_secret: REPO_USERNAME
+  REPO_PASSWORD:
+    from_secret: REPO_PASSWORD
+  servers:
+    - id: github
+      username: $REPO_USERNAME
+      password: $REPO_PASSWORD
+    - id: snapshot
+      username: $REPO_USERNAME
+      password: $REPO_PASSWORD
+  profiles:
+    - id: my-profile
+      repositories:
+        - id: github
+          name: github repo
+          url: https://github.com/iamvvra/spring-boot-distroless-jib/raw/mvn-repo/
+          layout: default
+  active_profiles:
+      - my-profile  
+
 steps:
 - name: test
   image: gcr.io/cloud-builders/mvn
