@@ -2,10 +2,18 @@ kind: pipeline
 name: default
 type: kubernetes
 
+volumes:
+- name: m2
+  host:
+    path: /var/lib/cache
+
 steps:
 - name: mvn-auth
   image: robertstettner/drone-mvn-auth
   debug: true
+  volumes:
+  - name: m2
+    path: ~/
   environment:
     REPO_USERNAME:
       from_secret: REPO_USERNAME
@@ -27,19 +35,12 @@ steps:
           layout: default
   active_profiles:
       - my-profile  
-- name: test
-  image: gcr.io/cloud-builders/mvn
-  commands:
-  - mvn test
-  when:
-    branch:
-      - feature/*
-      - master
-    event:
-      - pull_request
-      - push
+
 - name: package
   image: gcr.io/cloud-builders/mvn
+  volumes:
+  - name: m2
+    path: ~/
   commands:
     - mvn deploy -DskipTests=true
   when:
@@ -48,22 +49,5 @@ steps:
     event:
       - push
   depends_on:
-    - test
+    # - test
     - mvn-auth
-- name: build-image
-  image: gcr.io/cloud-builders/mvn
-  environment:
-    USERNAME:
-      from_secret: REGISTRY_USERNAME
-    PASSWORD:
-      from_secret: REGISTRY_PASSWORD
-  commands:
-    - echo "$USERNAME"
-    - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
-  depends_on:
-    - test
-  when:
-    branch:
-      - master
-    event:
-      - push
