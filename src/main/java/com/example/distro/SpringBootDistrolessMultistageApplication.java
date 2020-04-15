@@ -1,5 +1,6 @@
 package com.example.distro;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,9 @@ public class SpringBootDistrolessMultistageApplication {
 
 @RestController
 class HelloController {
+
+	@Value("${app.message}")
+	String message;
 	@GetMapping(value="/hello")
 	public String getMethodName() {
 		return "hello world";
@@ -40,7 +44,7 @@ class HelloController {
 
 	@GetMapping(value="/jib")
 	public String jib() {
-		return "hello jib";
+		return message;
 	}
 	
 	
