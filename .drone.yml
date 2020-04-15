@@ -11,5 +11,4 @@ steps:
     PASSWORD:
       from_secret: REGISTRY_PASSWORD
   commands:
-  - mvn clean package
-  - mvn compile jib:build -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
+  - mvn package jib:build -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
