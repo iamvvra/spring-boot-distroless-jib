@@ -16,3 +16,5 @@ steps:
       from_secret: REGISTRY_PASSWORD
   commands:
     - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
+  depends_on:
+    - test-build-image
