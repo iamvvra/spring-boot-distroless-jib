@@ -3,10 +3,19 @@ name: default
 type: kubernetes
 
 steps:
+- name: code-analysis
+  image: aosapps/drone-sonar-plugin
+  settings:
+    sonar_host:
+      from_secret: sonar_host
+    sonar_token:
+      from_secret: sonar_token
 - name: test
   image: gcr.io/cloud-builders/mvn
   commands:
   - mvn test
+  depends_on:
+    - code-analysis
   when:
     branch:
       - feature/*
@@ -25,6 +34,7 @@ steps:
     - echo "$USERNAME"
     - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
   depends_on:
+    - code-analysis
     - test
   when:
     branch:
