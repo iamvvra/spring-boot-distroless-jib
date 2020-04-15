@@ -3,6 +3,10 @@ name: default
 type: kubernetes
 
 steps:
+- name: compile
+  image: gcr.io/cloud-builders/mvn
+  commands:
+    - mvn clean compile
 - name: code-analysis
   image: aosapps/drone-sonar-plugin
   settings:
@@ -15,6 +19,8 @@ steps:
   sources: .
   level: DEBUG
   showProfiling: true
+  depends_on:
+    - compile
 - name: test
   image: gcr.io/cloud-builders/mvn
   commands:
