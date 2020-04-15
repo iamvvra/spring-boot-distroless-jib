@@ -46,6 +46,11 @@ class HelloController {
 	public String jib() {
 		return message;
 	}
+
+	@GetMapping(value = "/newapi")
+	public String api1() {
+		return "newapi-response";
+	}
 	
 	
 }
