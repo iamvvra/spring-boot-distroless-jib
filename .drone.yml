@@ -2,11 +2,6 @@ kind: pipeline
 name: default
 type: kubernetes
 
-volumes:
-- name: m2
-  host:
-    path: /var/lib/cache
-
 steps:
 - name: test
   image: gcr.io/cloud-builders/mvn
