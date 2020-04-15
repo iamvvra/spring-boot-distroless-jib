@@ -11,7 +11,7 @@ steps:
     sonar_token:
       from_secret: sonar_token
   commands:
-    - mvn clean compile sonar:sonar -Dsonar.projectKey=spring-boot-distroless-jib -Dsonar.host.url=$sonar_host -Dsonar.login=$sonar_token
+    - mvn sonar:sonar -Dsonar.projectKey=spring-boot-distroless-jib -Dsonar.host.url=$sonar_host -Dsonar.login=$sonar_token
 - name: test
   image: gcr.io/cloud-builders/mvn
   commands:
