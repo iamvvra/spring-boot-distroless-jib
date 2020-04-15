@@ -2,13 +2,25 @@ kind: pipeline
 name: default
 type: kubernetes
 
-authenticate:
+steps:
+- name: test
+  image: gcr.io/cloud-builders/mvn
+  commands:
+  - mvn test
+  when:
+    branch:
+      - feature/*
+      - master
+    event:
+      - pull_request
+      - push
+- name: package
   image: robertstettner/drone-mvn-auth
   environment:
-  REPO_USERNAME:
-    from_secret: REPO_USERNAME
-  REPO_PASSWORD:
-    from_secret: REPO_PASSWORD
+    REPO_USERNAME:
+      from_secret: REPO_USERNAME
+    REPO_PASSWORD:
+      from_secret: REPO_PASSWORD
   servers:
     - id: github
       username: $REPO_USERNAME
@@ -25,23 +37,13 @@ authenticate:
           layout: default
   active_profiles:
       - my-profile  
-
-steps:
-- name: test
-  image: gcr.io/cloud-builders/mvn
   commands:
-  - mvn test
+    - mvn deploy -DskipTests=true
   when:
     branch:
-      - feature/*
       - master
-    event:
-      - pull_request
-      - push
-- name: package
-  image: gcr.io/cloud-builders/mvn
-  commands:
-    - mvn deploy
+  depends_on:
+    - test
 - name: build-image
   image: gcr.io/cloud-builders/mvn
   environment:
