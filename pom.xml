@@ -108,7 +108,8 @@
 				<version>2.1.0</version>
 				<configuration>
 					<from>
-						<image>gcr.io/distroless/java:8</image>
+						<!-- <image>gcr.io/distroless/java:8</image> -->
+						<image>openjdk:8-slim</image>
 					</from>
 					<to>
 						<image>vijayraghavan08/${project.artifactId}:${project.version}-${git.commit.id.describe-short}</image>
