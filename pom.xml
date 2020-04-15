@@ -108,8 +108,8 @@
 				<version>2.1.0</version>
 				<configuration>
 					<from>
-						<!-- <image>gcr.io/distroless/java:8</image> -->
-						<image>vijayraghavan08/distroless-java:8</image>
+						<image>gcr.io/distroless/java:8</image>
+						<!-- <image>vijayraghavan08/distroless-java:8</image> -->
 						<!-- <image>openjdk:8-slim</image> -->
 					</from>
 					<to>
