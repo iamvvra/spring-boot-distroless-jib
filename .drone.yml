@@ -3,11 +3,22 @@ name: default
 type: kubernetes
 
 steps:
-- name: test-build-image
+- name: test
   image: gcr.io/cloud-builders/mvn
   commands:
   - mvn test
-- name: build-jar
+  when:
+    branch:
+      - feature/*
+      - master
+    event:
+      - pull_request
+      - push
+- name: package
+  image: gcr.io/cloud-builders/mvn
+  commands:
+    - mvn deploy
+- name: build-image
   image: gcr.io/cloud-builders/mvn
   environment:
     USERNAME:
@@ -15,6 +26,12 @@ steps:
     PASSWORD:
       from_secret: REGISTRY_PASSWORD
   commands:
+    - echo "$USERNAME"
     - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
   depends_on:
-    - test-build-image
+    - test
+  when:
+    branch:
+      - master
+    event:
+      - push
