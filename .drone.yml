@@ -49,6 +49,7 @@ steps:
     branch:
       - master
       - release/*
+      - bug/*
     event:
       - push
       - tag
