@@ -44,7 +44,6 @@ steps:
     - echo "$USERNAME"
     - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
   depends_on:
-    - code-analysis
     - test
   when:
     branch:
