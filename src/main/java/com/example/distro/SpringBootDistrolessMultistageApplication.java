@@ -23,8 +23,6 @@ class HelloController {
 
 	@Value("${app.message}")
 	String message;
-	@Value("${app.message2}")
-	String message2;
 
 	@GetMapping(value="/hello")
 	public String getMethodName() {
