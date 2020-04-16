@@ -12,6 +12,11 @@ steps:
       from_secret: sonar_token
   commands:
     - mvn sonar:sonar -Dsonar.projectKey=spring-boot-distroless-jib -Dsonar.host.url=$sonar_host -Dsonar.login=$sonar_token
+  when:
+      branch:
+        - feature/*
+        - master
+        - bug/*
 - name: test
   image: gcr.io/cloud-builders/mvn
   commands:
@@ -21,10 +26,12 @@ steps:
   when:
     branch:
       - feature/*
+      - bug/*
       - master
     event:
       - pull_request
       - push
+      - tag
 - name: build-image
   image: gcr.io/cloud-builders/mvn
   environment:
@@ -41,5 +48,8 @@ steps:
   when:
     branch:
       - master
+      - release/*
     event:
       - push
+      - tag
+      - pull_request
