@@ -49,6 +49,11 @@ class HelloController {
 
 	@GetMapping(value = "/newapi/{name}")
 	public String api1(@PathVariable String name) {
+		return "hello " + name;
+	}
+
+	@GetMapping(value = "/greet/{name}")
+	public String getMethodName(@PathVariable String name) {
 		return "hello "+name;
 	}
 

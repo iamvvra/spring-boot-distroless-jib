@@ -28,6 +28,7 @@ steps:
       - feature/*
       - bug/*
       - master
+      - release/*
     event:
       - pull_request
       - push
