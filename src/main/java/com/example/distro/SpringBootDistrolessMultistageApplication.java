@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @SpringBootApplication
 public class SpringBootDistrolessMultistageApplication {
 
@@ -23,35 +21,40 @@ class HelloController {
 
 	@Value("${app.message}")
 	String message;
-	@GetMapping(value="/hello")
+
+	@GetMapping(value = "/hello")
 	public String getMethodName() {
 		return "hello world";
 	}
 
-	@GetMapping(value="/hai")
+	@GetMapping(value = "/hai")
 	public String getMethodName2() {
 		return "hei";
 	}
 
-	@GetMapping(value="/sayehello")
+	@GetMapping(value = "/sayehello")
 	public String getMethodName3() {
 		return "hello there";
 	}
 
-	@GetMapping(value="/onemoretimepls")
+	@GetMapping(value = "/onemoretimepls")
 	public String getMethodName4() {
 		return "okkay, hello there";
 	}
 
-	@GetMapping(value="/jib")
+	@GetMapping(value = "/jib")
 	public String jib() {
 		return message;
 	}
 
 	@GetMapping(value = "/newapi/{name}")
 	public String api1(@PathVariable String name) {
-		return "hello "+name;
+		return "hello " + name;
 	}
-	
-	
+
+	@GetMapping(value = "/greet/{name}")
+	public String getMethodName(@PathVariable String name) {
+		return "hello " + name;
+	}
+
 }
