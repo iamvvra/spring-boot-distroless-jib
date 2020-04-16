@@ -44,7 +44,7 @@ class HelloController {
 
 	@GetMapping(value = "/jib")
 	public String jib() {
-		return message;
+		return "jib-" + message;
 	}
 
 	@GetMapping(value = "/newapi/{name}")
@@ -54,7 +54,7 @@ class HelloController {
 
 	@GetMapping(value = "/greet/{name}")
 	public String getMethodName(@PathVariable String name) {
-		return "hello " + name;
+		return "hello "+name;
 	}
 
 }
