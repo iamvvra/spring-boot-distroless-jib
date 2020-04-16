@@ -54,7 +54,7 @@ class HelloController {
 
 	@GetMapping(value = "/greet/{name}")
 	public String getMethodName(@PathVariable String name) {
-		return "hello "+name;
+		return "hello Mr."+name; 
 	}
 
 }
