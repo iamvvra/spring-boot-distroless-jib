@@ -1,0 +1,40 @@
+kind: pipeline
+name: default
+type: kubernetes
+
+steps:
+- name: test
+  image: maven
+  commands:
+  - mvn test
+  when:
+    branch:
+      - feature/*
+      - bug/*
+      - master
+      - release/*
+    event:
+      - pull_request
+      - push
+      - tag
+- name: build-image
+  image: plugins/docker
+  environment:
+    USERNAME: vijayraghavan08
+    PASSWORD:
+      from_secret: docker-secret
+    username: vijayraghavan08
+    password: 
+      from_secret: docker-secret
+  commands:
+    - echo "$USERNAME"
+    - mvn package jib:build -DskipTests=true -Djib.allowInsecureRegistries=true -Djib.to.auth.username=$USERNAME -Djib.to.auth.password=$PASSWORD
+  depends_on:
+    - test
+  when:
+    branch:
+      - master
+      - release/*
+    event:
+      - push
+      - tag
